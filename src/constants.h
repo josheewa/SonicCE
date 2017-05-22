@@ -1,5 +1,6 @@
 #ifndef _SONICCE_CONSTANTS_H_
 #define _SONICCE_CONSTANTS_H_
+
 //Patterns
 #define MV_FIX 0
 #define MV_FLY_VERTICAL 1
@@ -44,9 +45,13 @@
 #define CND2_MASK 0x0f //0b00001111
 
 //rotation indices
-#define ROTATION_90 1
-#define ROTATION_180 2
-#define ROTATION_270 3
+#ddefine ROTATION_45 1
+#define ROTATION_90 2
+#define ROTATION_135 3
+#define ROTATION_180 4
+#define ROTATION_225 5
+#define ROTATION_270 6
+#define ROTATION_315 7
 #define NO_ROTATION 0
 
 //flip indices
@@ -99,6 +104,9 @@
 #define CHECKPOINT_OK_INDEX 3
 #define END_SIGN_INDEX 4
 #define END_SIGN_DATA {32,32,MV_FIX,ACT_END_LEVEL<<4,0,CND_SONIC_COLLISION<<4,end_sign_eggman}
+
+//Miscellaneous
+#define SONIC_JUMP_STATES_NUMBER 47
 
 //boolean
 typedef uint8_t bool;

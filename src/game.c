@@ -17,17 +17,18 @@ void initSonic(void)
 	sonic.actsprite=sonic_standby;
 	sonic.spr_mirror=NO_MIRROR;
 	sonic.spr_rotation=NO_ROTATION;
+	sonic.jumpstate=0;
 }
 
 uint8_t game(void)
 {
-	load_game_data();
-	actlevel=load_level();
+	loadGameData();
+	actlevel=loadLevel();
 	if(actlevel==NULL)
 		return 0;
-	load_tilemap();
-	init_sonic();
-	intro_screen();
+	loadTiles();
+	initSonic();
+	introScreen();
 	while(!os_GetCSC());
 	act_x=actlevel->depart_tile_x;
 	act_y=actlevel->depart_tile_y-140;

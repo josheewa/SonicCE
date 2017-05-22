@@ -1,8 +1,11 @@
 #ifndef _SONICCE_PHYSIC_H_
 #define _SONICCE_PHYSIC_H_
 #include "common.h"
+#include "game.h"
 
-bool verif_collision(box_t element, box_t obstacle);
-uint8_t deter_relative_position(box_t element, box_t obstacle);
-point_t deter_center(box_t box);
+bool verifCollision(box_t element, box_t obstacle);
+uint8_t deterRelativePosition(box_t element, box_t obstacle);
+point_t deterCenter(box_t box);
+void jumpModifier(void);
+void applyCollisions(box_t previous, box_t newbox);
 #endif

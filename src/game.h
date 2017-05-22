@@ -5,6 +5,7 @@
 #include "keydetect.h"
 
 extern level_t* actlevel;
+extern sonic_t sonic;
 
 void initSonic(void);
 uint8_t game(void);
