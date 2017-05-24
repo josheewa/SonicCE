@@ -1,0 +1,5 @@
+#GroupASM            : tile_gfx
+#Palette             : PALETTE.png
+#Tilemap             : 16,16,true
+#PNGImages           :
+ tileset
