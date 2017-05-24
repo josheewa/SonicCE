@@ -1,0 +1,4 @@
+python3 unsigncsv.py SoniLV01.csv
+python3 convtiles.py SoniLV01.csv
+spasm -E SoniLV01.ez80 SoniLV01.8xv
+mv SoniLV01.8xv ../../bin/SoniLV01.8xv
