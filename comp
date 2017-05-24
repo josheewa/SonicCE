@@ -1,0 +1,22 @@
+case "$1" in
+	c)
+		cd src/gfx
+		convpng
+		cd ../..
+		;;
+	l)
+		cd src/levels
+		./comp
+		cd ../..
+		;;
+	cl)
+		cd src/gfx
+		convpng
+		cd ../..
+		cd src/levels
+		./comp
+		cd ../..
+		;;
+esac
+export CEDEV=/home/gregori/Documents/TI/CEdev
+wine /home/gregori/Documents/TI/CEdev/bin/make.exe $2
