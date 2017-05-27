@@ -1,22 +1,5 @@
-/*Sonic CE--A Sonic clone for TI83Premium CE
-*    Copyright (C) 2017  Grégori Mignerot
-*
-*    This program is free software: you can redistribute it and/or modify
-*    it under the terms of the GNU General Public License as published by
-*    the Free Software Foundation, either version 3 of the License, or
-*    (at your option) any later version.
-*
-*    This program is distributed in the hope that it will be useful,
-*    but WITHOUT ANY WARRANTY; without even the implied warranty of
-*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*    GNU General Public License for more details.
-*
-*    You should have received a copy of the GNU General Public License
-*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 #ifndef _SONICCE_CONSTANTS_H_
 #define _SONICCE_CONSTANTS_H_
-
 //Patterns
 #define MV_FIX 0
 #define MV_FLY_VERTICAL 1
@@ -26,6 +9,7 @@
 #define MV_FLY_RANDOM 5
 #define MV_FLY_POURSUIT 6
 #define MV_FLY_FLEE 7
+#define MV_FALL_AND_UP 8 //les lustres a marble zone
 #define MV_WALK_PLATFORM 9
 #define MV_WALK_LEFT 10
 #define MV_WALK_RIGHT 11
@@ -61,13 +45,9 @@
 #define CND2_MASK 0x0f //0b00001111
 
 //rotation indices
-#ddefine ROTATION_45 1
-#define ROTATION_90 2
-#define ROTATION_135 3
-#define ROTATION_180 4
-#define ROTATION_225 5
-#define ROTATION_270 6
-#define ROTATION_315 7
+#define ROTATION_90 1
+#define ROTATION_180 2
+#define ROTATION_270 3
 #define NO_ROTATION 0
 
 //flip indices
@@ -109,9 +89,9 @@
 
 ////////Level data
 #define LEVEL_ITEM_TYPES_NUMBER 32
-#define LEVEL_TILE_NUMBER 1728
-#define TILEMAP_HEIGHT 36
-#define TILEMAP_WIDTH 48
+#define LEVEL_TILE_NUMBER 120*54
+#define TILEMAP_HEIGHT 54
+#define TILEMAP_WIDTH 120
 #define TRANSPARENCY 6
 
 //level elements indices and data
@@ -120,9 +100,6 @@
 #define CHECKPOINT_OK_INDEX 3
 #define END_SIGN_INDEX 4
 #define END_SIGN_DATA {32,32,MV_FIX,ACT_END_LEVEL<<4,0,CND_SONIC_COLLISION<<4,end_sign_eggman}
-
-//Miscellaneous
-#define SONIC_JUMP_STATES_NUMBER 47
 
 //boolean
 typedef uint8_t bool;

@@ -1,29 +1,16 @@
-/*Sonic CE--A Sonic clone for TI83Premium CE
-*    Copyright (C) 2017  Grégori Mignerot
-*
-*    This program is free software: you can redistribute it and/or modify
-*    it under the terms of the GNU General Public License as published by
-*    the Free Software Foundation, either version 3 of the License, or
-*    (at your option) any later version.
-*
-*    This program is distributed in the hope that it will be useful,
-*    but WITHOUT ANY WARRANTY; without even the implied warranty of
-*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*    GNU General Public License for more details.
-*
-*    You should have received a copy of the GNU General Public License
-*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 #include "game.h"
+#include "keydetect.h"
 
 //The main game module
 sonic_t sonic;
 level_t* actlevel;
 uint24_t j;
-uint24_t act_x;
-uint24_t act_y;
+int act_x;
+int act_y;
+uint8_t debugcombo;
+bool debug;
 
-void initSonic(void)
+void init_sonic(void)
 {
 	sonic.box.x=actlevel->depart_tile_x;
 	sonic.box.y=actlevel->depart_tile_y;
@@ -33,21 +20,37 @@ void initSonic(void)
 	sonic.actsprite=sonic_standby;
 	sonic.spr_mirror=NO_MIRROR;
 	sonic.spr_rotation=NO_ROTATION;
-	sonic.jumpstate=0;
 }
 
 uint8_t game(void)
 {
-	loadGameData();
-	actlevel=loadLevel();
+	debug=false;
+	debugcombo=0;
+	load_game_data();
+	actlevel=load_level();
 	if(actlevel==NULL)
 		return 0;
-	loadTiles();
-	initSonic();
-	introScreen();
-	while(!os_GetCSC());
-	act_x=actlevel->depart_tile_x;
-	act_y=actlevel->depart_tile_y-140;
+	load_tilemap();
+	init_sonic();
+	intro_screen();
+	//debug : up, down, left, right, alpha
+	while(1){
+		if(keyCheck(dir_group,up)&&debugcombo==0)
+			debugcombo++;
+		if(keyCheck(dir_group,down)&&debugcombo==1)
+			debugcombo++;
+		if(keyCheck(dir_group,left)&&debugcombo==2)
+			debugcombo++;
+		if(keyCheck(dir_group,right)&&debugcombo==3)
+			debugcombo++;
+		if(keyCheck(alpha_group,alpha)&&debugcombo==4)
+			debug=true;
+		if(keyCheck(annul_group,enter))
+			break;
+	}
+			
+	act_x=actlevel->depart_tile_x*32-160;
+	act_y=actlevel->depart_tile_y*32-120;
 	gfx_Tilemap(&tilemap,act_x,act_y);
 	while(1){
 		if(keyCheck(annul_group,annul))
@@ -60,13 +63,29 @@ uint8_t game(void)
 			act_x-=5;
 		if(keyCheck(dir_group,right))
 			act_x+=5;
-		gfx_Tilemap(&tilemap,act_x,act_y-140);
+		if(act_x<0){act_x=0;}
+		if(act_x>TILEMAP_WIDTH*32){act_x=TILEMAP_WIDTH*32-10*32;}
+		if(act_y<0){act_y=0;}
+		if(act_y>TILEMAP_HEIGHT*32){act_y=TILEMAP_HEIGHT*32-8*32;}
+		gfx_Tilemap(&tilemap,act_x,act_y);
+		if(debug){
+			gfx_SetTextScale(1,1);
+			gfx_SetTextXY(0,0);
+			gfx_PrintInt(act_x,4);
+			gfx_SetTextXY(0,30);
+			gfx_PrintInt(act_y,4);
+		}
 		gfx_SwapDraw();
 	}
+	free(&tilemap);
+	free(actlevel);
+	ti_CloseAll();
+	free(tileset_tiles);
+	free(item_desc);
 	return 1;
 }
 
-void introScreen(void)
+void intro_screen(void)
 {
 	gfx_ZeroScreen();
 	gfx_SetTransparentColor(6);

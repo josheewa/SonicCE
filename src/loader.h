@@ -1,22 +1,6 @@
-/*Sonic CE--A Sonic clone for TI83Premium CE
-*    Copyright (C) 2017  Grégori Mignerot
-*
-*    This program is free software: you can redistribute it and/or modify
-*    it under the terms of the GNU General Public License as published by
-*    the Free Software Foundation, either version 3 of the License, or
-*    (at your option) any later version.
-*
-*    This program is distributed in the hope that it will be useful,
-*    but WITHOUT ANY WARRANTY; without even the implied warranty of
-*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*    GNU General Public License for more details.
-*
-*    You should have received a copy of the GNU General Public License
-*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 #ifndef _LOADER_H_
 #define _LOADER_H_
-#include "common.h"
+#include "stdheader.h"
 #include "game.h"
 
 extern gfx_image_t* sonic_standby;
@@ -51,11 +35,12 @@ extern gfx_image_t* introellipsis;
 extern uint8_t progression[2];
 extern el_info_t item_desc[LEVEL_ITEM_TYPES_NUMBER];
 extern gfx_tilemap_t tilemap;
+extern gfx_image_t* tileset_tiles[56];
 
-void loadSprites(void);
-void loadSave(void);
-void saveProgress(void);
-void loadGameData(void);
-level_t* loadLevel(void);
-void loadTiles(void);
+void load_sprites(void);
+void load_save(void);
+void save_progress(void);
+void load_game_data(void);
+level_t* load_level(void);
+void load_tilemap(void num);
 #endif

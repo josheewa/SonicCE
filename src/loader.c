@@ -1,19 +1,3 @@
-/*Sonic CE--A Sonic clone for TI83Premium CE
-*    Copyright (C) 2017  Grégori Mignerot
-*
-*    This program is free software: you can redistribute it and/or modify
-*    it under the terms of the GNU General Public License as published by
-*    the Free Software Foundation, either version 3 of the License, or
-*    (at your option) any later version.
-*
-*    This program is distributed in the hope that it will be useful,
-*    but WITHOUT ANY WARRANTY; without even the implied warranty of
-*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*    GNU General Public License for more details.
-*
-*    You should have received a copy of the GNU General Public License
-*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 #include "loader.h"
 #include "gfx/sprite_gfx.h"
 #include "gfx/tile_gfx.h"
@@ -60,7 +44,7 @@ uint24_t i;
 gfx_image_t* tileset_tiles[56];
 uint8_t level[LEVEL_TILE_NUMBER];
 
-void loadSprites(void)
+void load_sprites(void)
 {
 	sonic_standby=gfx_MallocSprite(19, 26);
 	dzx7_Standard(sonic_standby_compressed, sonic_standby);
@@ -120,7 +104,7 @@ void loadSprites(void)
 	dzx7_Standard(introellipsis_compressed, introellipsis);
 }
 
-void loadSave(void)
+void load_save(void)
 {
 	ti_CloseAll();
 	file_var=ti_Open("SoniSAV","r");
@@ -128,13 +112,13 @@ void loadSave(void)
 	{
 		progression[0]=1;
 		progression[1]=1;
-		saveProgress();
+		save_progress();
 	}
 	if(!ti_Read(&progression, sizeof(uint8_t)*2, 1, file_var))
 	{
 		progression[0]=1;
 		progression[1]=1;
-		saveProgress();
+		save_progress();
 	}
 	ti_CloseAll();
 	//debug!!!!
@@ -143,7 +127,7 @@ void loadSave(void)
 	//end of debugging section
 }
 
-void saveProgress(void)
+void save_progress(void)
 {
 	ti_CloseAll();
 	file_var=ti_Open("SoniSAV","w");
@@ -151,7 +135,7 @@ void saveProgress(void)
 	ti_CloseAll();
 }
 
-void loadGameData(void){
+void load_game_data(void){
 	RING_DATA.sprite=ring;
 	CHECKPOINT_DATA.sprite=checkpoint;
 	CHECKPOINT_OK_DATA.sprite=checkpoint_ok;
@@ -160,7 +144,7 @@ void loadGameData(void){
 	item_desc[CHECKPOINT_OK_INDEX]=CHECKPOINT_OK_DATA;
 }
 
-level_t* loadLevel()
+level_t* load_level(void)
 {
 	char varnum[8]="SoniLV";
 	switch(progression[0])
@@ -218,7 +202,7 @@ level_t* loadLevel()
 	return &level_to_load;
 }
 
-void copyTable(uint8_t* table1, uint8_t* table2, uint8_t len)
+void copy_table(uint8_t* table1, uint8_t* table2, uint8_t len)
 {
 	for(i=0;i<len;i++)
 	{
@@ -226,20 +210,7 @@ void copyTable(uint8_t* table1, uint8_t* table2, uint8_t len)
 	}
 }
 
-void getLevel(uint8_t index)
-{
-	switch(index)
-	{
-		case 0x01:
-			copyTable(&level,&SoniLV01,LEVEL_TILE_NUMBER);
-			break;
-		default:
-			copyTable(&level,&SoniLV01,LEVEL_TILE_NUMBER);
-			break;
-	}
-}
-
-void loadTiles(void)
+void load_tilemap(void)
 {
 	gfx_image_t *tmp_ptr;
 	/* Decompress the tiles */
@@ -248,4 +219,19 @@ void loadTiles(void)
 		dzx7_Turbo(tileset_tiles_compressed[i], tmp_ptr);
 		tileset_tiles[i]=tmp_ptr;
 	}
+	/* Initialize the tilemap structure */
+	actlevel=load_level();
+	free(&level_to_load);
+	tilemap.map = actlevel->data;
+	tilemap.tiles = tileset_tiles;
+	tilemap.type_width = gfx_tile_32_pixel;
+	tilemap.type_height = gfx_tile_32_pixel;
+	tilemap.tile_height = 32;
+	tilemap.tile_width = 32;
+	tilemap.draw_height = 8;
+	tilemap.draw_width = 11;
+	tilemap.height = TILEMAP_HEIGHT;
+	tilemap.width = TILEMAP_WIDTH;
+	tilemap.y_loc = 0;
+	tilemap.x_loc = 0;
 }

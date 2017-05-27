@@ -1,19 +1,3 @@
-/*Sonic CE--A Sonic clone for TI83Premium CE
-*    Copyright (C) 2017  Grégori Mignerot
-*
-*    This program is free software: you can redistribute it and/or modify
-*    it under the terms of the GNU General Public License as published by
-*    the Free Software Foundation, either version 3 of the License, or
-*    (at your option) any later version.
-*
-*    This program is distributed in the hope that it will be useful,
-*    but WITHOUT ANY WARRANTY; without even the implied warranty of
-*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*    GNU General Public License for more details.
-*
-*    You should have received a copy of the GNU General Public License
-*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 //--------------------------------------
 // Program Name: Sonic CE
 // Author:       Tyulis (alias Grégori Mignerot)
@@ -21,7 +5,7 @@
 // Description:  Sonic for TI CE
 //--------------------------------------
 
-#include "common.h"
+#include "stdheader.h"
 //Specific headers
 #include "loader.h"
 #include "game.h"
@@ -30,28 +14,27 @@
 // stdarg.h, setjmp.h, assert.h, ctype.h, float.h, iso646.h, limits.h, errno.h, debug.h, intce.h
 
 /* Put your function prototypes here */
-void titleScreen(void);
+void titlescreen(void);
 
 /* Put all your globals here. */
 
 void main(void)
 {
-	malloc(0); //only to compile it into the program
+	malloc(0);
 	gfx_Begin(gfx_8bpp);
 	gfx_SetPalette(sprite_gfx_pal, sizeof(sprite_gfx_pal), 0);
 	gfx_SetTransparentColor(6);
-	loadSprites();
-	titleScreen();
-	loadSave();
+	load_sprites();
+	titlescreen();
+	load_save();
 	game();
-	while(!os_GetCSC());
-	saveProgress();
+	save_progress();
 	gfx_End();
 	prgm_CleanUp();
 }
 
 /* Put other functions here */
-void titleScreen(void)
+void titlescreen(void)
 {
 	//draws the controls presentation
 	gfx_SetDrawBuffer();
@@ -71,3 +54,4 @@ void titleScreen(void)
 	gfx_SwapDraw();
 	while(!os_GetCSC());
 }
+

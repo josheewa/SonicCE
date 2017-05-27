@@ -1,30 +1,8 @@
-/*Sonic CE--A Sonic clone for TI83Premium CE
-*    Copyright (C) 2017  Grégori Mignerot
-*
-*    This program is free software: you can redistribute it and/or modify
-*    it under the terms of the GNU General Public License as published by
-*    the Free Software Foundation, either version 3 of the License, or
-*    (at your option) any later version.
-*
-*    This program is distributed in the hope that it will be useful,
-*    but WITHOUT ANY WARRANTY; without even the implied warranty of
-*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*    GNU General Public License for more details.
-*
-*    You should have received a copy of the GNU General Public License
-*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 #include "physic.h"
 
-//Y data for sonic jumps. To adapt with speed.
-int8_t jumpdata[SONIC_JUMP_STATES_NUMBER]={0,6,11,15,19,22,25,28,30,32,34,35,36,37,37,38,38,39,39,39,39,38,38,37,36,35,33,31,29,26,23,19,15,11,6,0,-6,-13,-20,-28,-37,-47,-58,-70,-83,-97,-112,-127};
-//                   0            5              10             15             20              25             30           35               40                  45        47
-uint8_t jumpidx;
-box_t previousbox;
-
-bool verifCollision(box_t element, box_t obstacle)
+bool verif_collision(box_t element, box_t obstacle)
 {
-    uint8_t relatpos=deterRelativePosition(element, obstacle);
+    uint8_t relatpos=deter_relative_position(element, obstacle);
     if(relatpos&REL_IN_MASK){
         return true;
     }else{
@@ -32,7 +10,7 @@ bool verifCollision(box_t element, box_t obstacle)
     }
 }
 
-uint8_t deterRelativePosition(box_t element, box_t obstacle)
+uint8_t deter_relative_position(box_t element, box_t obstacle)
 {
     uint8_t pos=0;
     if(element.x>=(obstacle.x+obstacle.w))
@@ -58,36 +36,10 @@ uint8_t deterRelativePosition(box_t element, box_t obstacle)
     }
 }
 
-point_t deterCenter(box_t rect)
+point_t deter_center(box_t rect)
 {
     point_t center;
     center.x=(rect.x+rect.w)/2;
     center.y=(rect.y+rect.h)/2;
     return center;
-}
-
-void jumpModifier(void)
-{
-	if(sonic.speed<0x20){
-		sonic.jumpstate+=4;
-	}else if(sonic.speed>=0x20 && sonic.speed<0x40){
-		sonic.jumpstate+=3;
-	}else if(sonic.speed>=0x40 && sonic.speed<0x80){
-		sonic.jumpstate+=2;
-	}else if(sonic.speed>=0x80 && sonic.speed<0x100){
-		sonic.jumpstate+=1;
-	}
-	previousbox=sonic.box;
-	if(sonic.jumpstate>=SONIC_JUMP_STATES_NUMBER){
-		sonic.box.y-=16;
-	}else{
-		sonic.box.y+=jumpdata[sonic.jumpstate];
-	}
-	sonic.box.x+=sonic.speed/0x20;
-	applyCollisions(previousbox,sonic.box);
-}
-
-void applyCollisions(box_t previous, box_t newbox)
-{
-	//Not implemented
 }
