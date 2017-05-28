@@ -9,6 +9,7 @@
 //Specific headers
 #include "loader.h"
 #include "game.h"
+#include <debug.h>
 #include "gfx/sprite_gfx.h"
 
 // stdarg.h, setjmp.h, assert.h, ctype.h, float.h, iso646.h, limits.h, errno.h, debug.h, intce.h
@@ -24,13 +25,20 @@ void main(void)
 	gfx_Begin(gfx_8bpp);
 	gfx_SetPalette(sprite_gfx_pal, sizeof(sprite_gfx_pal), 0);
 	gfx_SetTransparentColor(6);
+	dbg_sprintf(dbgout,"Init ok");
 	load_sprites();
+	dbg_sprintf(dbgout,"Sprites ok");
 	titlescreen();
 	load_save();
+	dbg_sprintf(dbgout,"Save ok");
 	game();
-	save_progress();
+	dbg_sprintf(dbgout,"Game ok");
+	if(save_progress())
+		os_PutStrLine("Error when saving");
+	dbg_sprintf(dbgout,"Save ok ok");
+	//unload_sprites();
+	dbg_sprintf(dbgout,"Unload ok");
 	gfx_End();
-	prgm_CleanUp();
 }
 
 /* Put other functions here */

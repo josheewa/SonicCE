@@ -29,7 +29,7 @@ uint8_t game(void)
 	load_game_data();
 	actlevel=load_level();
 	if(actlevel==NULL)
-		return 0;
+		return 1;
 	load_tilemap();
 	init_sonic();
 	intro_screen();
@@ -64,9 +64,9 @@ uint8_t game(void)
 		if(keyCheck(dir_group,right))
 			act_x+=5;
 		if(act_x<0){act_x=0;}
-		if(act_x>TILEMAP_WIDTH*32){act_x=TILEMAP_WIDTH*32-10*32;}
+		if(act_x>TILEMAP_WIDTH*32-320){act_x=TILEMAP_WIDTH*32-10*32;}
 		if(act_y<0){act_y=0;}
-		if(act_y>TILEMAP_HEIGHT*32){act_y=TILEMAP_HEIGHT*32-8*32;}
+		if(act_y>TILEMAP_HEIGHT*32-255){act_y=TILEMAP_HEIGHT*32-8*32;}
 		gfx_Tilemap(&tilemap,act_x,act_y);
 		if(debug){
 			gfx_SetTextScale(1,1);
@@ -82,7 +82,7 @@ uint8_t game(void)
 	ti_CloseAll();
 	free(tileset_tiles);
 	free(item_desc);
-	return 1;
+	return 0;
 }
 
 void intro_screen(void)

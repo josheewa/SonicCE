@@ -44,6 +44,40 @@ uint24_t i;
 gfx_image_t* tileset_tiles[56];
 uint8_t level[LEVEL_TILE_NUMBER];
 
+void unload_sprites(void)
+{
+	free(sonic_standby);
+	free(sonic_look_up);
+	free(sonic_look_down);
+	free(sonic_ball);
+	free(sonic_hit);
+	free(sonic_dead);
+	free(sonic_push);
+	////////
+	free(sonic_run_1);
+	free(sonic_run_2);
+	free(sonic_run_wall_1);
+	free(sonic_run_wall_2);
+	////////
+	free(sonic_walk_1);
+	free(sonic_walk_2);
+	free(sonic_walk_3);
+	free(sonic_walk_wall_1);
+	free(sonic_walk_wall_2);
+	free(sonic_walk_wall_3);
+	////////
+	free(ring);
+	free(checkpoint);
+	free(checkpoint_ok);
+	free(ring);
+	free(checkpoint);
+	free(checkpoint_ok);
+	free(ressort);
+	free(ressort_act);
+	////////
+	free(introellipsis);
+}
+
 void load_sprites(void)
 {
 	sonic_standby=gfx_MallocSprite(19, 26);
@@ -127,12 +161,18 @@ void load_save(void)
 	//end of debugging section
 }
 
-void save_progress(void)
+uint8_t save_progress(void)
 {
 	ti_CloseAll();
 	file_var=ti_Open("SoniSAV","w");
-	ti_Write(&progression, sizeof(uint8_t)*2, 1, file_var);
-	ti_CloseAll();
+	if(file_var){
+		ti_Write(&progression, sizeof(uint8_t)*2, 1, file_var);
+		ti_CloseAll();
+		return 0;
+	}else{
+		ti_CloseAll();
+		return 1;
+	}
 }
 
 void load_game_data(void){
@@ -228,7 +268,7 @@ void load_tilemap(void)
 	tilemap.type_height = gfx_tile_32_pixel;
 	tilemap.tile_height = 32;
 	tilemap.tile_width = 32;
-	tilemap.draw_height = 8;
+	tilemap.draw_height = 9;
 	tilemap.draw_width = 11;
 	tilemap.height = TILEMAP_HEIGHT;
 	tilemap.width = TILEMAP_WIDTH;

@@ -12,9 +12,9 @@
 #include <stdlib.h>
 #include <string.h>
 /* Other available headers */
-#include <lib/ce/keypadc.h>
-#include <lib/ce/graphx.h>
-#include <lib/ce/fileioc.h>
+#include <keypadc.h>
+#include <graphx.h>
+#include <fileioc.h>
 #include <decompress.h>
 /* Project headers */
 #include "constants.h"

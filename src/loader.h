@@ -37,9 +37,10 @@ extern el_info_t item_desc[LEVEL_ITEM_TYPES_NUMBER];
 extern gfx_tilemap_t tilemap;
 extern gfx_image_t* tileset_tiles[56];
 
+void unload_sprites(void);
 void load_sprites(void);
 void load_save(void);
-void save_progress(void);
+uint8_t save_progress(void);
 void load_game_data(void);
 level_t* load_level(void);
 void load_tilemap(void num);
