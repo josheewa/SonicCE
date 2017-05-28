@@ -19,4 +19,6 @@ case "$1" in
 		;;
 esac
 export CEDEV=/home/gregori/Documents/TI/CEdev
+export PATH=/home/gregori/Documents/TI/CEdev/bin:$PATH
 wine /home/gregori/Documents/TI/CEdev/bin/make.exe $2
+/home/gregori/Documents/TI/CEdev/bin/convhex -x bin/SONICCE.hex

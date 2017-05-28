@@ -9,12 +9,12 @@
 
 #----------------------------
 TARGET ?= SONICCE
-DEBUGMODE ?= NDEBUG
+DEBUGMODE ?= DEBUG
 ARCHIVED ?= NO
 COMPRESSED ?= YES
 #----------------------------
 ICONPNG ?= iconc.png
-DESCRIPTION ?= "Sonic for TICE"
+DESCRIPTION ?= "Sonic for TI83PCE"
 #----------------------------
 
 #Add shared library names to the L varible, for instance:
@@ -45,4 +45,4 @@ INIT_LOC := D1A87F
 USE_FLASH_FUNCTIONS ?= YES
 #----------------------------
 
-include $(CEDEV)/bin/main_makefile
+include $(CEDEV)/include/.makefile
