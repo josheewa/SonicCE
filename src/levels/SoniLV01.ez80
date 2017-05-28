@@ -5,6 +5,8 @@
  db 01h ;act_number
  db 08h,1Bh ;depart_tile
 
+#include "SoniLV01_data.ez80"
+
 ;items
  db 00h,00h,00h
  db 00h,00h,00h
