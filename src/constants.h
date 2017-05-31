@@ -55,28 +55,24 @@
 #define MIRROR_LEFT_RIGHT 1
 #define MIRROR_UP_DOWN 2
 
-//collision bitmasks
-#define NO_COLLISION 0
-#define COLLISION_TOP 1
-#define COLLISION_DOWN 2
-#define COLLISION_LEFT 4
-#define COLLISION_RIGHT 8
-#define COLLISION_OBLIQUE_DR 16
-#define COLLISION_OBLIQUE_RT 32
-#define COLLISION_OBLIQUE_TL 64
-#define COLLISION_OBLIQUE_LD 128
-
-//relative position
-#define UP 1
-#define DOWN 2
-#define LEFT 4
-#define RIGHT 8
-#define IN_UP 16
-#define IN_DOWN 32
-#define IN_LEFT 64
-#define IN_RIGHT 128
-#define REL_IN_MASK 0xf0 //0b11110000
-#define REL_OUT_MASK 0x0f //0b00001111
+//tile collsions indices for masks
+#define NONE 0x0000
+#define UP 0x0001
+#define DOWN 0x0002
+#define LEFT 0x0004
+#define RIGHT 0x0008
+#define IN_UP 0x0010
+#define IN_DOWN 0x0020
+#define IN_LEFT 0x0040
+#define IN_RIGHT 0x0080
+#define DGL_UP_RIGHT 0x0100 //diagonals
+#define DGL_UP_LEFT 0x0200
+#define DGL_DOWN_LEFT 0x0400
+#define DGL_DOWN_RIGHT 0x0800
+#define MID_UP 0x1000
+#define MID_DOWN 0x2000
+#define MID_LEFT 0x4000
+#define MID_RIGHT 0x8000
 
 //level indices
 #define TEST_ZONE 0
@@ -93,6 +89,7 @@
 #define TILEMAP_HEIGHT 54
 #define TILEMAP_WIDTH 120
 #define TRANSPARENCY 6
+#define TILE_NUMBER 56
 
 //level elements indices and data
 #define RING_INDEX 1

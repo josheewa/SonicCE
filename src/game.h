@@ -4,6 +4,7 @@
 #include "loader.h"
 
 extern level_t* actlevel;
+extern sonic_t sonic;
 
 void init_sonic(void);
 uint8_t game(void);

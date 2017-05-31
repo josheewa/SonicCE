@@ -8,8 +8,8 @@ typedef struct save_s{
 } save_t;
 
 typedef struct box_s{
-	uint8_t x;
-	uint8_t y;
+	int x;
+	int y;
 	uint8_t w;
 	uint8_t h;
 } box_t;
@@ -25,6 +25,7 @@ typedef struct sonic_s{
 	gfx_image_t* actsprite;
 	uint8_t spr_mirror;
 	uint8_t spr_rotation;
+	uint8_t act_tile
 } sonic_t;
 
 typedef struct el_info_s{

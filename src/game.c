@@ -5,8 +5,6 @@
 sonic_t sonic;
 level_t* actlevel;
 uint24_t j;
-int act_x;
-int act_y;
 uint8_t debugcombo;
 bool debug;
 
@@ -49,39 +47,39 @@ uint8_t game(void)
 			break;
 	}
 			
-	act_x=actlevel->depart_tile_x*32-160;
-	act_y=actlevel->depart_tile_y*32-120;
-	gfx_Tilemap(&tilemap,act_x,act_y);
+	sonic.box.x=actlevel->depart_tile_x*32-160;
+	sonic.box.y=actlevel->depart_tile_y*32-120;
+	sonic.act_tile=(sonic.box.y/32*TILEMAP_WIDTH)+(sonic.box.x/32);
+	gfx_Tilemap(&tilemap,sonic.box.x,sonic.box.y);
 	while(1){
-		if(keyCheck(annul_group,annul))
+		if(keyCheck(action_group,annul))
 			break;
 		if(keyCheck(dir_group,up))
-			act_y-=5;
+			sonic.box.y-=5;
 		if(keyCheck(dir_group,down))
-			act_y+=5;
+			sonic.box.y+=5;
 		if(keyCheck(dir_group,left))
-			act_x-=5;
+			sonic.box.x-=5;
 		if(keyCheck(dir_group,right))
-			act_x+=5;
-		if(act_x<0){act_x=0;}
-		if(act_x>TILEMAP_WIDTH*32-320){act_x=TILEMAP_WIDTH*32-10*32;}
-		if(act_y<0){act_y=0;}
-		if(act_y>TILEMAP_HEIGHT*32-255){act_y=TILEMAP_HEIGHT*32-8*32;}
-		gfx_Tilemap(&tilemap,act_x,act_y);
+			sonic.box.x+=5;
+		if(sonic.box.x<0){sonic.box.x=0;}
+		if(sonic.box.x>TILEMAP_WIDTH*32-320){sonic.box.x=TILEMAP_WIDTH*32-10*32;}
+		if(sonic.box.y<0){sonic.box.y=0;}
+		if(sonic.box.y>TILEMAP_HEIGHT*32-255){sonic.box.y=TILEMAP_HEIGHT*32-8*32;}
+		apply_physic();
+		gfx_Tilemap_NoClip(&tilemap,sonic.box.x-120,sonic.box.y-100);
+		gfx_Sprite_NoClip(sonic.actsprite,120,100);
 		if(debug){
+			if(keyCheck(pgrm_group,prgm))
+				debug_menu();
 			gfx_SetTextScale(1,1);
 			gfx_SetTextXY(0,0);
-			gfx_PrintInt(act_x,4);
-			gfx_SetTextXY(0,30);
-			gfx_PrintInt(act_y,4);
+			gfx_PrintInt(sonic.box.x,4);
+			gfx_SetTextXY(0,25);
+			gfx_PrintInt(sonic.box.y,4);
 		}
-		gfx_SwapDraw();
+		gfx_BlitBuffer();
 	}
-	free(&tilemap);
-	free(actlevel);
-	ti_CloseAll();
-	free(tileset_tiles);
-	free(item_desc);
 	return 0;
 }
 
@@ -100,5 +98,5 @@ void intro_screen(void)
 	gfx_PrintStringXY("Acte ",140,97);
 	gfx_SetTextXY(220,97);
 	gfx_PrintUInt(actlevel->act_number,1);
-	gfx_SwapDraw();
+	gfx_BlitBuffer();
 }

@@ -59,7 +59,7 @@ void titlescreen(void)
 	gfx_PrintStringXY("Annul. : fermer le jeu", 20, 150);
 	gfx_SetTextScale(1,2);
 	gfx_PrintStringXY("<Appuyez sur une touche pour commencer...>", 15, 200);
-	gfx_SwapDraw();
+	gfx_BlitBuffer();
 	while(!os_GetCSC());
 }
 

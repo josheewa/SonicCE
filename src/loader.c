@@ -41,7 +41,7 @@ el_info_t item_desc[LEVEL_ITEM_TYPES_NUMBER];
 level_t level_to_load;
 gfx_tilemap_t tilemap;
 uint24_t i;
-gfx_image_t* tileset_tiles[56];
+gfx_image_t* tileset_tiles[TILE_NUMBER];
 uint8_t level[LEVEL_TILE_NUMBER];
 
 void unload_sprites(void)
@@ -254,7 +254,7 @@ void load_tilemap(void)
 {
 	gfx_image_t *tmp_ptr;
 	/* Decompress the tiles */
-	for(i = 0; i < 56; i++){
+	for(i = 0; i < TILE_NUMBER; i++){
 		tmp_ptr = gfx_MallocSprite(32,32);
 		dzx7_Turbo(tileset_tiles_compressed[i], tmp_ptr);
 		tileset_tiles[i]=tmp_ptr;
