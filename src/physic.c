@@ -18,52 +18,67 @@ uint24_t tile_collisions[TILE_NUMBER]=[
 	//To continue (2 first lines of tileset ok)
 ]
 
-bool verif_collision(box_t element, box_t obstacle)
+void apply_physic(uint8_t control)
 {
-    uint8_t relatpos=deter_relative_position(element, obstacle);
-    if(relatpos&REL_IN_MASK){
-        return true;
-    }else{
-    	return false;
-    }
-}
-
-uint8_t deter_relative_position(box_t element, box_t obstacle)
-{
-    uint8_t pos=0;
-    if(element.x>=(obstacle.x+obstacle.w))
-        pos|=RIGHT;
-    if((element.x+element.w)<=obstacle.x)
-        pos|=LEFT;
-    if(element.y>=(obstacle.y+obstacle.h))
-        pos|=DOWN;
-    if((element.y+element.h)<=obstacle.y)
-        pos|=UP;
-    if(pos!=0)
-    	return pos;
-    else{
-    	if((element.y+element.h)<(obstacle.y+obstacle.h))
-    		pos|=IN_UP;
-    	if(element.y>obstacle.y)
-    		pos|=IN_DOWN;
-    	if((element.x+element.w)<(obstacle.x+obstacle.w))
-    		pos|=IN_LEFT;
-    	if(element.x>obstacle.x)
-    		pos|=IN_RIGHT;
-    	return pos;
-    }
-}
-
-point_t deter_center(box_t rect)
-{
-    point_t center;
-    center.x=(rect.x+rect.w)/2;
-    center.y=(rect.y+rect.h)/2;
-    return center;
-}
-
-void apply_physic(void)
-{
-	uint8_t tile_in=actlevel.data[sonic.act_tile];
-	uint24_t act_tile_collisions=tile_collisions[tile_in];
+	uint24_t collmask=NONE;
+	if(control&LEFT){
+		sonic.speed-=1;
+	}else if(control&RIGHT){
+		sonic.speed+=1;
+	}else if(control==NONE && sonic.speed>0){
+		sonic.speed-=1;
+	}else if(control==NONE && sonic.speed<0){
+		sonic.speed+=1;
+	}
+	sonic.box.x+=sonic.speed;
+	sonic.box.y-=sonic.gravity;
+	if(sonic.jumping)
+		sonic.y+=JUMP_CONSTANT;
+	//for top left
+	collmask=tile_collisions[actlevel.data[(sonic.box.y/32)*TILEMAP_WIDTH+(sonic.box.x/32)]];
+	if(collmask&DOWN && sonic.box.y>sonic.box.y-sonic.box.y%32+26){
+		sonic.box.y+=32-(sonic.box.y%32);
+		sonic.jumping=false;
+		sonic.gravity=BASE_GRAVITY;
+	}else if(collmask&MID_UP && sonic.box.y>sonic.box.y-sonic.box.y%32+10){
+		sonic.box.y+=16-(sonic.box.y%16);
+		sonic.jumping=false;
+		sonic.gravity=BASE_GRAVITY;
+	}
+	if(collmask&RIGHT && sonic.box.x>sonic.box.x-sonic.box.x%32+26){
+		sonic.box.x+=32-(sonic.box.x%32);
+		sonic.speed/=5;
+	}else if(collmask&MID_LEFT && sonic.box.x>sonic.box.x-sonic.box.x%32+10){
+		sonic.box.x+=16-(sonic.box.x%16);
+		sonic.speed/=5;
+	}
+	//for down right
+	collmask=tile_collisions[actlevel.data[((sonic.box.y+sonic.box.h)/32)*TILEMAP_WIDTH+((sonic.box.x+sonic.box.w)/32)]];
+	if(collmask&UP && (sonic.box.y+sonic.box.h)<(sonic.box.y+sonic.box.h)+(sonic.box.y+sonic.box.h)%32-26){
+		sonic.box.y-=(sonic.box.y+sonic.box.h)%32;
+		sonic.jumping=false;
+		sonic.gravity=BASE_GRAVITY;
+	}else if(collmask&MID_UP && (sonic.box.y+sonic.box.h)<(sonic.box.y+sonic.box.h)+(sonic.box.y+sonic.box.h)%32-10){
+		sonic.box.y-=(sonic.box.y+sonic.box.h)%16;
+		sonic.jumping=false;
+		sonic.gravity=BASE_GRAVITY;
+	}
+	if(!collmask&UP && !collmask&MID_UP)
+		sonic.gravity+=1;
+	if(collmask&RIGHT && (sonic.box.x+sonic.box.w)<(sonic.box.x+sonic.box.w)+(sonic.box.x+sonic.box.w)%32-26){
+		sonic.box.x-=(sonic.box.x+sonic.box.w)%32;
+		sonic.speed/=5;
+	}else if(collmask&MID_LEFT && (sonic.box.x+sonic.box.w)<(sonic.box.x+sonic.box.w)+(sonic.box.x+sonic.box.w)%32-10){
+		sonic.box.x+=(sonic.box.x+sonic.box.w)%16;
+		sonic.speed/=5;
+	}
+	if(collmask&DGL_DOWN_RIGHT && (sonic.box.y+sonic.box.h)%32>(sonic.box.x+sonic.box.w)%32){
+		sonic.box.y+=(sonic.box.y+sonic.box.h)%32-(sonic.box.x+sonic.box.w)%32;
+		sonic.gravity=BASE_GRAVITY;
+		sonic.jumping=false;
+	}else if(collmask&DGL_DOWN_LEFT && (sonic.box.y+sonic.box.h)%32>32-(sonic.box.x+sonic.box.w)%32){
+		sonic.box.y+=(sonic.box.y+sonic.box.h)%32-(32-(sonic.box.x+sonic.box.w)%32);
+		sonic.gravity=BASE_GRAVITY;
+		sonic.jumping=false;
+	}
 }

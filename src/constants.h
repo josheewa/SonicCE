@@ -56,23 +56,25 @@
 #define MIRROR_UP_DOWN 2
 
 //tile collsions indices for masks
-#define NONE 0x0000
-#define UP 0x0001
-#define DOWN 0x0002
-#define LEFT 0x0004
-#define RIGHT 0x0008
-#define IN_UP 0x0010
-#define IN_DOWN 0x0020
-#define IN_LEFT 0x0040
-#define IN_RIGHT 0x0080
-#define DGL_UP_RIGHT 0x0100 //diagonals
-#define DGL_UP_LEFT 0x0200
-#define DGL_DOWN_LEFT 0x0400
-#define DGL_DOWN_RIGHT 0x0800
-#define MID_UP 0x1000
-#define MID_DOWN 0x2000
-#define MID_LEFT 0x4000
-#define MID_RIGHT 0x8000
+#define NONE 0x000000
+#define UP 0x000001
+#define DOWN 0x000002
+#define LEFT 0x000004
+#define RIGHT 0x000008
+#define IN_UP 0x000010
+#define IN_DOWN 0x000020
+#define IN_LEFT 0x000040
+#define IN_RIGHT 0x000080
+#define DGL_UP_RIGHT 0x000100 //diagonals
+#define DGL_UP_LEFT 0x000200
+#define DGL_DOWN_LEFT 0x000400
+#define DGL_DOWN_RIGHT 0x000800
+#define MID_UP 0x001000
+#define MID_DOWN 0x002000
+#define MID_LEFT 0x004000
+#define MID_RIGHT 0x008000
+#define HALF_DOWN_LEFT 0x010000
+#define HALF_DOWN_RIGHT 0x020000
 
 //level indices
 #define TEST_ZONE 0
@@ -97,6 +99,10 @@
 #define CHECKPOINT_OK_INDEX 3
 #define END_SIGN_INDEX 4
 #define END_SIGN_DATA {32,32,MV_FIX,ACT_END_LEVEL<<4,0,CND_SONIC_COLLISION<<4,end_sign_eggman}
+
+//Miscellaneous
+#define JUMP_CONSTANT 6
+#define BASE_GRAVITY 2
 
 //boolean
 typedef uint8_t bool;

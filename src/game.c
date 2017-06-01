@@ -5,7 +5,6 @@
 sonic_t sonic;
 level_t* actlevel;
 uint24_t j;
-uint8_t debugcombo;
 bool debug;
 
 void init_sonic(void)
@@ -18,10 +17,14 @@ void init_sonic(void)
 	sonic.actsprite=sonic_standby;
 	sonic.spr_mirror=NO_MIRROR;
 	sonic.spr_rotation=NO_ROTATION;
+	sonic.jumping=false;
+	sonic.gravity=BASE_GRAVITY;
 }
 
 uint8_t game(void)
 {
+	uint8_t control;
+	uint8_t debugcombo;
 	debug=false;
 	debugcombo=0;
 	load_game_data();
@@ -49,24 +52,28 @@ uint8_t game(void)
 			
 	sonic.box.x=actlevel->depart_tile_x*32-160;
 	sonic.box.y=actlevel->depart_tile_y*32-120;
-	sonic.act_tile=(sonic.box.y/32*TILEMAP_WIDTH)+(sonic.box.x/32);
-	gfx_Tilemap(&tilemap,sonic.box.x,sonic.box.y);
+	gfx_Tilemap_NoClip(&tilemap,sonic.box.x-120,sonic.box.y-100);
 	while(1){
+		control=NONE;
 		if(keyCheck(action_group,annul))
 			break;
-		if(keyCheck(dir_group,up))
-			sonic.box.y-=5;
+		/*if(keyCheck(dir_group,up))
+			control|=UP;
 		if(keyCheck(dir_group,down))
-			sonic.box.y+=5;
+			control|=DOWN;*/
 		if(keyCheck(dir_group,left))
-			sonic.box.x-=5;
+			control|=LEFT;
 		if(keyCheck(dir_group,right))
-			sonic.box.x+=5;
+			control|=RIGHT;
+		if(keyCheck(second_group,second))
+			sonic.jumping=true;
+		if(keyCheck(alpha_group,alpha))
+			game_pause();
 		if(sonic.box.x<0){sonic.box.x=0;}
 		if(sonic.box.x>TILEMAP_WIDTH*32-320){sonic.box.x=TILEMAP_WIDTH*32-10*32;}
 		if(sonic.box.y<0){sonic.box.y=0;}
 		if(sonic.box.y>TILEMAP_HEIGHT*32-255){sonic.box.y=TILEMAP_HEIGHT*32-8*32;}
-		apply_physic();
+		apply_physic(control);
 		gfx_Tilemap_NoClip(&tilemap,sonic.box.x-120,sonic.box.y-100);
 		gfx_Sprite_NoClip(sonic.actsprite,120,100);
 		if(debug){
@@ -99,4 +106,22 @@ void intro_screen(void)
 	gfx_SetTextXY(220,97);
 	gfx_PrintUInt(actlevel->act_number,1);
 	gfx_BlitBuffer();
+}
+
+void debug_menu(void)
+{
+	//not implemented
+}
+
+void game_pause(void)
+{
+	gfx_ZeroScreen();
+	gfx_SetColor(18);
+	gfx_SetTextFGColor(7);
+	gfx_SetTextScale(2,3);
+	gfx_PrintStringXY("Pause", 120, 100);
+	gfx_SetTextScale(1,1);
+	gfx_PrintStringXY("Press [alpha] to resume", 120, 130);
+	gfx_BlitBuffer();
+	while(!keyCheck(alpha_group,alpha));
 }

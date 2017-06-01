@@ -21,11 +21,11 @@ typedef struct point_s{
 
 typedef struct sonic_s{
 	box_t box;
-	uint8_t speed;
+	int speed;
 	gfx_image_t* actsprite;
 	uint8_t spr_mirror;
-	uint8_t spr_rotation;
-	uint8_t act_tile
+	uint8_t gravity;
+	bool jumping;
 } sonic_t;
 
 typedef struct el_info_s{
