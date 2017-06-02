@@ -85,6 +85,16 @@
 #define ICE_DESERT 5
 #define METAL_CASTLE 6
 
+//Sonic states
+#define STANDBY 1
+#define WALK 2
+#define RUN 4
+#define JUMP 8
+#define PUSH 16
+#define DGL 32
+#define LOOP 64
+#define LOOP_ANGLE 128
+
 ////////Level data
 #define LEVEL_ITEM_TYPES_NUMBER 32
 #define LEVEL_TILE_NUMBER 120*54

@@ -16,9 +16,10 @@ void init_sonic(void)
 	sonic.speed=0;
 	sonic.actsprite=sonic_standby;
 	sonic.spr_mirror=NO_MIRROR;
-	sonic.spr_rotation=NO_ROTATION;
 	sonic.jumping=false;
 	sonic.gravity=BASE_GRAVITY;
+	sonic.state=STANDBY;
+	sonic.frame=0;
 }
 
 uint8_t game(void)

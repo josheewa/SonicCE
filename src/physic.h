@@ -3,4 +3,5 @@
 #include "stdheader.h"
 
 void apply_physic(void);
+void update_sprite(void);
 #endif

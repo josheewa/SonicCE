@@ -24,8 +24,11 @@ typedef struct sonic_s{
 	int speed;
 	gfx_image_t* actsprite;
 	uint8_t spr_mirror;
+	uint8_t spr_rotation;
 	uint8_t gravity;
 	bool jumping;
+	uint8_t state;
+	uint8_t frame;
 } sonic_t;
 
 typedef struct el_info_s{
