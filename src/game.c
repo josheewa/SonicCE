@@ -14,7 +14,8 @@ void init_sonic(void)
 	sonic.box.w=20;
 	sonic.box.h=23;
 	sonic.speed=0;
-	sonic.actsprite=sonic_standby;
+	sonic.actsprite=gfx_MallocSprite(27, 27);
+	*sonic.actsprite=*sonic_standby;
 	sonic.spr_mirror=NO_MIRROR;
 	sonic.jumping=false;
 	sonic.gravity=BASE_GRAVITY;
@@ -47,7 +48,7 @@ uint8_t game(void)
 			debugcombo++;
 		if(keyCheck(alpha_group,alpha)&&debugcombo==4)
 			debug=true;
-		if(keyCheck(annul_group,enter))
+		if(keyCheck(action_group,enter))
 			break;
 	}
 			
@@ -78,7 +79,7 @@ uint8_t game(void)
 		gfx_Tilemap_NoClip(&tilemap,sonic.box.x-120,sonic.box.y-100);
 		gfx_Sprite_NoClip(sonic.actsprite,120,100);
 		if(debug){
-			if(keyCheck(pgrm_group,prgm))
+			if(keyCheck(prgm_group,prgm))
 				debug_menu();
 			gfx_SetTextScale(1,1);
 			gfx_SetTextXY(0,0);

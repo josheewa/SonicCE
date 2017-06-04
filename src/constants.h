@@ -45,9 +45,9 @@
 #define CND2_MASK 0x0f //0b00001111
 
 //rotation indices
-#define ROTATION_90 1
-#define ROTATION_180 2
-#define ROTATION_270 3
+#define ROTATION90 1
+#define ROTATION180 2
+#define ROTATION270 3
 #define NO_ROTATION 0
 
 //flip indices

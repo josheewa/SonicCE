@@ -3,8 +3,6 @@
 #include "gfx/tile_gfx.h"
 
 gfx_image_t* sonic_standby;
-gfx_image_t* sonic_look_up;
-gfx_image_t* sonic_look_down;
 gfx_image_t* sonic_ball;
 gfx_image_t* sonic_hit;
 gfx_image_t* sonic_dead;
@@ -47,8 +45,6 @@ uint8_t level[LEVEL_TILE_NUMBER];
 void unload_sprites(void)
 {
 	free(sonic_standby);
-	free(sonic_look_up);
-	free(sonic_look_down);
 	free(sonic_ball);
 	free(sonic_hit);
 	free(sonic_dead);
@@ -80,41 +76,37 @@ void unload_sprites(void)
 
 void load_sprites(void)
 {
-	sonic_standby=gfx_MallocSprite(19, 26);
+	sonic_standby=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_standby_compressed, sonic_standby);
-	sonic_look_up=gfx_MallocSprite(19, 25);
-	dzx7_Standard(sonic_look_up_compressed, sonic_look_up);
-	sonic_look_down=gfx_MallocSprite(19, 17);
-	dzx7_Standard(sonic_look_down_compressed, sonic_look_down);
-	sonic_ball=gfx_MallocSprite(20, 20);
+	sonic_ball=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_ball_compressed, sonic_ball);
-	sonic_hit=gfx_MallocSprite(27, 19);
+	sonic_hit=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_hit_compressed, sonic_hit);
-	sonic_dead=gfx_MallocSprite(23, 29);
+	sonic_dead=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_dead_compressed, sonic_dead);
-	sonic_push=gfx_MallocSprite(19, 24);
+	sonic_push=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_push_compressed, sonic_push);
 	////////
-	sonic_run_1=gfx_MallocSprite(20, 23);
+	sonic_run_1=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_run_1_compressed, sonic_run_1);
-	sonic_run_2=gfx_MallocSprite(21, 24);
+	sonic_run_2=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_run_2_compressed, sonic_run_2);
-	sonic_run_wall_1=gfx_MallocSprite(26, 24);
+	sonic_run_wall_1=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_run_wall_1_compressed, sonic_run_wall_1);
-	sonic_run_wall_2=gfx_MallocSprite(27, 24);
+	sonic_run_wall_2=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_run_wall_2_compressed, sonic_run_wall_2);
 	////////
-	sonic_walk_1=gfx_MallocSprite(24, 25);
+	sonic_walk_1=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_walk_1_compressed, sonic_walk_1);
-	sonic_walk_2=gfx_MallocSprite(19, 25);
+	sonic_walk_2=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_walk_2_compressed, sonic_walk_2);
-	sonic_walk_3=gfx_MallocSprite(25, 25);
+	sonic_walk_3=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_walk_3_compressed, sonic_walk_3);
-	sonic_walk_wall_1=gfx_MallocSprite(29, 24);
+	sonic_walk_wall_1=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_walk_wall_1_compressed, sonic_walk_wall_1);
-	sonic_walk_wall_2=gfx_MallocSprite(25, 25);
+	sonic_walk_wall_2=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_walk_wall_2_compressed, sonic_walk_wall_2);
-	sonic_walk_wall_3=gfx_MallocSprite(28, 25);
+	sonic_walk_wall_3=gfx_MallocSprite(27, 27);
 	dzx7_Standard(sonic_walk_wall_3_compressed, sonic_walk_wall_3);
 	////////
 	ring=gfx_MallocSprite(10, 10);

@@ -23,6 +23,7 @@ typedef struct sonic_s{
 	box_t box;
 	int speed;
 	gfx_image_t* actsprite;
+	gfx_image_t* tmpsprite;
 	uint8_t spr_mirror;
 	uint8_t spr_rotation;
 	uint8_t gravity;

@@ -14,7 +14,7 @@ uint24_t tile_collisions[TILE_NUMBER]=[
 	DGL_DOWN_RIGHT,		//ascending grass
 	MID_LEFT,			//loop middle left
 	NONE,				//loop center
-	MID_RIGHT,			//loop middle right
+	MID_RIGHT			//loop middle right
 	//To continue (2 first lines of tileset ok)
 ]
 
@@ -38,7 +38,59 @@ void update_sprite(void){
 		case 46: sonic.state|=DGL; break;
 		default: break;
 	}
-	//todo: sprite switches
+	if(sonic.state&WALK && !sonic.state&DGL && !sonic.state&LOOP_ANGLE){
+		if(sonic.frame==1){
+			sonic.tmpsprite=sonic_walk_1;
+			sonic.frame++;
+		}else if(sonic.frame==2){
+			sonic.tmpsprite=sonic_walk_2;
+			sonic.frame++;
+		}else{
+			sonic.tmpsprite=sonic_walk_3;
+			sonic.frame=1;
+		}
+	}else if((sonic.state&WALK && sonic.state&DGL) || (sonic.state&WALK && sonic.state&LOOP_ANGLE)){
+		if(sonic.frame==1){
+			sonic.tmpsprite=sonic_walk_wall_1;
+			sonic.frame++;
+		}else if(sonic.frame==2){
+			sonic.tmpsprite=sonic_walk_wall_2;
+			sonic.frame++;
+		}else{
+			sonic.tmpsprite=sonic_walk_wall_3;
+			sonic.frame=1;
+		}
+	}else if(sonic.state&RUN && !sonic.state&DGL && !sonic.state&LOOP_ANGLE){
+		if(sonic.frame==1){
+			sonic.tmpsprite=sonic_run_1;
+			sonic.frame++;
+		}else{
+			sonic.tmpsprite=sonic_run_2;
+			sonic.frame=1;
+		}
+	}else if((sonic.state&RUN && sonic.state&DGL) || (sonic.state&WALK && sonic.state&LOOP_ANGLE)){
+		if(sonic.frame==1){
+			sonic.tmpsprite=sonic_run_wall_1;
+			sonic.frame++;
+		}else{
+			sonic.tmpsprite=sonic_run_wall_2;
+			sonic.frame=1;
+		}
+	}else if(sonic.state&JUMP){
+		sonic.tmpsprite=sonic_ball;
+	}else if(sonic.state&STANDBY){
+		sonic.tmpsprite=sonic_standby;
+	}
+	if(sonic.spr_rotation==ROTATION90){
+		gfx_RotateSpriteC(sonic.tmpsprite,sonic.actsprite);
+	}else if(sonic.spr_rotation==ROTATION180){
+		gfx_RotateSpriteC(sonic.tmpsprite,sonic.actsprite);
+		gfx_RotateSpriteC(sonic.actsprite,sonic.actsprite);
+	}else if(sonic.spr_rotation==ROTATION270){
+		gfx_RotateSpriteCC(sonic.tmpsprite,sonic.actsprite);
+	}else{
+		*sonic.actsprite=*sonic.tmpsprite;
+	}		
 }
 
 void apply_physic(uint8_t control)
@@ -61,6 +113,8 @@ void apply_physic(uint8_t control)
 		sonic.state=JUMP;
 	}else if(sonic.speed<-40 || sonic.speed>40){
 		sonic.state=RUN;
+	}else if(sonic.speed==0){
+		sonic.state=STANDBY;
 	}else{
 		sonic.state=WALK;
 	update_sprite();
