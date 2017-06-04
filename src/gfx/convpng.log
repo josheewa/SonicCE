@@ -2,24 +2,22 @@ Opened convpng.ini
 
 --- Group sprite_gfx (C) ---
 Using defined palette PALETTE.png...
-28:
- sonic_standby : converted! (compress: 496 -> 219 bytes)
- sonic_look_up : converted! (compress: 477 -> 200 bytes)
- sonic_look_down : converted! (compress: 325 -> 171 bytes)
- sonic_ball : converted! (compress: 402 -> 96 bytes)
- sonic_hit : converted! (compress: 515 -> 246 bytes)
- sonic_dead : converted! (compress: 669 -> 267 bytes)
- sonic_walk_1 : converted! (compress: 602 -> 255 bytes)
- sonic_walk_2 : converted! (compress: 477 -> 236 bytes)
- sonic_walk_3 : converted! (compress: 627 -> 261 bytes)
- sonic_walk_wall_1 : converted! (compress: 698 -> 254 bytes)
- sonic_walk_wall_2 : converted! (compress: 627 -> 225 bytes)
- sonic_walk_wall_3 : converted! (compress: 702 -> 246 bytes)
- sonic_run_1 : converted! (compress: 462 -> 221 bytes)
- sonic_run_2 : converted! (compress: 506 -> 214 bytes)
- sonic_run_wall_1 : converted! (compress: 626 -> 248 bytes)
- sonic_run_wall_2 : converted! (compress: 650 -> 229 bytes)
- sonic_push : converted! (compress: 458 -> 220 bytes)
+26:
+ sonic_standby : converted! (compress: 731 -> 233 bytes)
+ sonic_ball : converted! (compress: 731 -> 106 bytes)
+ sonic_hit : converted! (compress: 731 -> 247 bytes)
+ sonic_dead : converted! (compress: 731 -> 267 bytes)
+ sonic_walk_1 : converted! (compress: 731 -> 260 bytes)
+ sonic_walk_2 : converted! (compress: 731 -> 250 bytes)
+ sonic_walk_3 : converted! (compress: 731 -> 265 bytes)
+ sonic_walk_wall_1 : converted! (compress: 731 -> 250 bytes)
+ sonic_walk_wall_2 : converted! (compress: 731 -> 228 bytes)
+ sonic_walk_wall_3 : converted! (compress: 731 -> 244 bytes)
+ sonic_run_1 : converted! (compress: 731 -> 231 bytes)
+ sonic_run_2 : converted! (compress: 731 -> 222 bytes)
+ sonic_run_wall_1 : converted! (compress: 731 -> 251 bytes)
+ sonic_run_wall_2 : converted! (compress: 731 -> 231 bytes)
+ sonic_push : converted! (compress: 731 -> 231 bytes)
  ring : converted! (compress: 102 -> 56 bytes)
  checkpoint : converted! (compress: 464 -> 135 bytes)
  checkpoint_ok : converted! (compress: 464 -> 140 bytes)
@@ -92,7 +90,7 @@ Using defined palette PALETTE.png...
  tileset_tile_53_compressed (compress: 1026 -> 9 bytes) (tileset.c)
  tileset_tile_54_compressed (compress: 1026 -> 9 bytes) (tileset.c)
  tileset_tile_55_compressed (compress: 1026 -> 9 bytes) (tileset.c)
-Converted in 6 s
+Converted in 2 s
 
 [warning] image quality might be too low.
 please try grouping similar images, reducing image colors, 
